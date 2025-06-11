@@ -1,7 +1,10 @@
 import { Controller, Delete, Get, Patch, Post } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Books')
 @Controller('books')
 export class BooksController {
+  @ApiOperation({ summary: 'Get all books' })
   @Get()
   getBooks() {
     console.log('Fetching all books');
