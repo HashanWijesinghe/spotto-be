@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Book } from '../models/book.entity';
-import { CreateBookDto } from '../dtos/createBook.dto';
+import { CreateBookDto } from '../dtos/create-book.dto';
 
 @Injectable()
 export class BooksRepository {
@@ -30,7 +30,7 @@ export class BooksRepository {
   update(id: number, updatedBook: Book): Book | undefined {
     const index = this.books.findIndex((book) => book.id === id);
     if (index === -1) return undefined;
-    this.books[index] = { ...this.books[index], ...updatedBook };
+    this.books[index] = updatedBook;
     return this.books[index];
   }
 

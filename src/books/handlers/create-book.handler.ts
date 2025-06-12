@@ -1,5 +1,5 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { CreateBookCommand } from '../commands/createBook.command';
+import { CreateBookCommand } from '../commands/create-book.command';
 import { BooksService } from '../service/books.service';
 import { Book } from '../models/book.entity';
 
