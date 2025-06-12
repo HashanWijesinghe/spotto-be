@@ -1,0 +1,12 @@
+# Node modules and build artifacts
+node_modules
+dist
+
+.DS_Store
+
+# Git
+.git
+.gitignore
+
+# Editor/IDE configs
+.vscode
