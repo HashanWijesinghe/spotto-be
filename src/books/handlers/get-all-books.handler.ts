@@ -9,7 +9,9 @@ export class GetAllBooksQueryHandler
 {
   constructor(private readonly booksService: BooksService) {}
 
+  // adding async to the execute method so that it can return a Promise without unnecessary promise wrapping
+  // eslint-disable-next-line @typescript-eslint/require-await
   async execute(query: GetAllBooksQuery): Promise<Book[]> {
-    return Promise.resolve(this.booksService.getAllBooks(query.searchTerm));
+    return this.booksService.getAllBooks(query.searchTerm);
   }
 }

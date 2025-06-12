@@ -5,6 +5,7 @@ import { CreateBookDto } from '../dtos/create-book.dto';
 @Injectable()
 export class BooksRepository {
   private books: Book[] = [];
+  private nextId = 1; // To avoid any duplicate IDs
 
   findAll(searchTerm?: string): Book[] {
     if (searchTerm) {
@@ -23,11 +24,9 @@ export class BooksRepository {
 
   create(book: CreateBookDto): Book {
     const newBook: Book = {
-      id: this.books.length + 1, // Simple id generation
-      title: book.title,
-      author: book.author,
+      ...book,
+      id: this.nextId++, // Simple id generation
       publishedDate: new Date(book.publishedDate),
-      genre: book.genre,
     };
     this.books.push(newBook);
     return newBook;

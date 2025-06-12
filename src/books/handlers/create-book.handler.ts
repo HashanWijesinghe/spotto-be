@@ -9,7 +9,9 @@ export class CreateBookCommandHandler
 {
   constructor(private readonly booksService: BooksService) {}
 
-  execute(command: CreateBookCommand): Promise<Book> {
-    return Promise.resolve(this.booksService.createBook(command));
+  // adding async to the execute method so that it can return a Promise without unnecessary promise wrapping
+  // eslint-disable-next-line @typescript-eslint/require-await
+  async execute(command: CreateBookCommand): Promise<Book> {
+    return this.booksService.createBook(command);
   }
 }
