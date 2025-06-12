@@ -15,7 +15,6 @@ export class BooksRepository {
   }
 
   create(book: CreateBookDto): Book {
-    console.log('Creating book:', book);
     const newBook: Book = {
       id: this.books.length + 1, // Simple ID generation
       title: book.title,

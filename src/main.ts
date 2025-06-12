@@ -9,12 +9,9 @@ async function bootstrap() {
   app.useGlobalPipes(validationPipe);
 
   await app.listen(process.env.PORT ?? 3000);
-  console.log(`Application is running on: ${await app.getUrl()}`);
-  console.log(`Application is running on: ${process.env.PORT ?? 3000}`);
-  console.log(`Application is running on: ${process.env.HOST ?? 'localhost'}`);
-  console.log(
-    `Application is running on: ${process.env.NODE_ENV ?? 'development'}`,
-  );
+
+  const url = await app.getUrl();
+  console.log(`🚀 Server is running at ${url} 🚀`);
 }
 bootstrap();
 
