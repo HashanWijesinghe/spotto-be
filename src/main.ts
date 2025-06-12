@@ -13,6 +13,8 @@ async function bootstrap() {
   const url = await app.getUrl();
   console.log(`🚀 Server is running at ${url} 🚀`);
 }
+
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
 bootstrap();
 
 // setup swagger
