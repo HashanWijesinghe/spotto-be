@@ -1,5 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { GetBookByIdQuery } from '../queries/getBookById.query';
+import { GetBookByIdQuery } from '../queries/get-book-by-id.query';
 import { BooksService } from '../service/books.service';
 import { Book } from '../models/book.entity';
 import { BookNotFoundError } from '../errors/book-not-found.error';

@@ -6,7 +6,14 @@ import { CreateBookDto } from '../dtos/create-book.dto';
 export class BooksRepository {
   private books: Book[] = [];
 
-  findAll(): Book[] {
+  findAll(searchTerm?: string): Book[] {
+    if (searchTerm) {
+      return this.books.filter((book) =>
+        [book.title, book.author, book.genre].some((field) =>
+          field.toLowerCase().includes(searchTerm.toLowerCase()),
+        ),
+      );
+    }
     return this.books;
   }
 
@@ -16,7 +23,7 @@ export class BooksRepository {
 
   create(book: CreateBookDto): Book {
     const newBook: Book = {
-      id: this.books.length + 1, // Simple ID generation
+      id: this.books.length + 1, // Simple id generation
       title: book.title,
       author: book.author,
       publishedDate: new Date(book.publishedDate),

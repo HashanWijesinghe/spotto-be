@@ -3,24 +3,24 @@ import {
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { GetAllBooksQuery } from '../queries/getAllBooks.query';
+import { GetAllBooksQuery } from '../queries/get-all-books.query';
 import { Book } from '../models/book.entity';
 import { CreateBookCommand } from '../commands/create-book.command';
 import { GetBookByIdParam } from '../dtos/get-book-by-id-param.dto';
-import { GetBookByIdQuery } from '../queries/getBookById.query';
-import { BookNotFoundError } from '../errors/book-not-found.error';
+import { GetBookByIdQuery } from '../queries/get-book-by-id.query';
 import { DeleteBookByIdParam } from '../dtos/delete-book-by-id-param.dto';
 import { DeleteBookCommand } from '../commands/delete-book.command';
 import { UpdateBookByIdParam } from '../dtos/update-book-by-id-param.dto';
 import { UpdateBookDto } from '../dtos/update-book.dto';
 import { UpdateBookCommand } from '../commands/update-book.command';
+import { SearchBooksDto } from '../dtos/search-books.dto';
 
 @ApiTags('Books')
 @Controller('books')
@@ -32,8 +32,10 @@ export class BooksController {
 
   @ApiOperation({ summary: 'Get all books' })
   @Get()
-  getBooks(): Promise<Book[]> {
-    return this.queryBus.execute(new GetAllBooksQuery());
+  getBooks(@Query() query: SearchBooksDto): Promise<Book[]> {
+    const getAllBooksQuery = new GetAllBooksQuery();
+    getAllBooksQuery.searchTerm = query?.searchTerm;
+    return this.queryBus.execute(getAllBooksQuery);
   }
 
   @Get(':id')
@@ -49,7 +51,7 @@ export class BooksController {
   }
 
   @Delete(':id')
-  DeleteBook(@Param() params: DeleteBookByIdParam): Promise<any> {
+  DeleteBook(@Param() params: DeleteBookByIdParam): Promise<void> {
     const deleteCommand = new DeleteBookCommand();
     deleteCommand.id = params.id;
     return this.commandBus.execute(deleteCommand);
@@ -59,7 +61,7 @@ export class BooksController {
   UpdateBook(
     @Param() params: UpdateBookByIdParam,
     @Body() dto: UpdateBookDto,
-  ): Promise<any> {
+  ): Promise<Book | undefined> {
     const updateCommand = new UpdateBookCommand();
     updateCommand.id = params.id;
     updateCommand.data = dto;

@@ -4,14 +4,14 @@ import { Book } from '../models/book.entity';
 import { CreateBookDto } from '../dtos/create-book.dto';
 import { BookNotFoundError } from '../errors/book-not-found.error';
 import { UpdateBookDto } from '../dtos/update-book.dto';
-import { filterEmptyFields } from 'src/shared/utils/filter-empty-fields.util';
+import { filterEmptyFields } from '../../shared/utils/filter-empty-fields.util';
 
 @Injectable()
 export class BooksService {
   constructor(private readonly booksRepository: BooksRepository) {}
 
-  getAllBooks(): Book[] {
-    return this.booksRepository.findAll();
+  getAllBooks(searchTerm?: string): Book[] {
+    return this.booksRepository.findAll(searchTerm);
   }
 
   createBook(book: CreateBookDto): Book {

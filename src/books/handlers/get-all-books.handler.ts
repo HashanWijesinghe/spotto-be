@@ -1,5 +1,5 @@
 import { BooksService } from '../service/books.service';
-import { GetAllBooksQuery } from '../queries/getAllBooks.query';
+import { GetAllBooksQuery } from '../queries/get-all-books.query';
 import { Book } from '../models/book.entity';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 
@@ -9,7 +9,7 @@ export class GetAllBooksQueryHandler
 {
   constructor(private readonly booksService: BooksService) {}
 
-  async execute(): Promise<Book[]> {
-    return Promise.resolve(this.booksService.getAllBooks());
+  async execute(query: GetAllBooksQuery): Promise<Book[]> {
+    return Promise.resolve(this.booksService.getAllBooks(query.searchTerm));
   }
 }
